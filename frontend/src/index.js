@@ -18,6 +18,7 @@ export default function App(){
         <Route path="/signup" element={<SignUp />} />
         <Route path="/home" element={<Home />} /> 
         <Route path="/dashboard" element={<ProtectedRoute element={Dashboard} />} />
+        {/* <Route path="/dashboard" element={<Dashboard/>} /> */}
       </Route>
       </Routes>
     </BrowserRouter>

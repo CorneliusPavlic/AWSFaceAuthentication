@@ -1,9 +1,10 @@
 import { useState } from "react";
 import Camera from "../components/Camera";
+import "../styles/Login.css"; // Reuse the same CSS for consistency
 
 const SignUp = () => {
     const [photo, setPhoto] = useState("");
-    const [formData, setFormData] = useState({username: "", password: "", UserPhoto:""});
+    const [formData, setFormData] = useState({ username: "", password: "", UserPhoto: "" });
     const [confirmPassword, setConfirmPassword] = useState("");
     const [file, setFile] = useState(null);
 
@@ -35,7 +36,7 @@ const SignUp = () => {
             return;
         }
         
-        const updatedFormData = ({...formData, "UserPhoto": photo});
+        const updatedFormData = { ...formData, UserPhoto: photo };
 
         try {
             const response = await fetch('/api/register', {
@@ -64,21 +65,47 @@ const SignUp = () => {
     };
 
     return (
-        <>
-            <Camera callback={handleCallback}/>
-            <label htmlFor="user">UserName:</label><br/>
-            <input type="text" id="user" name="username" onChange={handleChange} value={formData.username} placeholder="Username"/><br/>
-            <label htmlFor="pword">Password:</label><br/>
-            <input type="password" id="pword" name="password" onChange={handleChange} value={formData.password} placeholder="Password" /><br/>
-            <label htmlFor="confirmpword">Confirm Password:</label><br/>
-            <input type="password" id="confirmpword" name="confirmpassword" onChange={(e) => setConfirmPassword(e.target.value)} value={confirmPassword} placeholder="Confirm Password" /><br/>
-            
-            <label htmlFor="photoUpload">Upload a profile picture:</label><br/>
-            <input type="file" id="photoUpload" accept="image/*" onChange={handleFileChange} /><br/>
-            
-            <input type="submit" value="Submit" onClick={handleSubmit}/>
-        </>
+        <div className="container">
+            <Camera className="camera" callback={handleCallback} />
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="user">UserName:</label>
+                <input
+                    type="text"
+                    id="user"
+                    name="username"
+                    onChange={handleChange}
+                    value={formData.username}
+                    placeholder="Username"
+                />
+                <label htmlFor="pword">Password:</label>
+                <input
+                    type="password"
+                    id="pword"
+                    name="password"
+                    onChange={handleChange}
+                    value={formData.password}
+                    placeholder="Password"
+                />
+                <label htmlFor="confirmpword">Confirm Password:</label>
+                <input
+                    type="password"
+                    id="confirmpword"
+                    name="confirmpassword"
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    value={confirmPassword}
+                    placeholder="Confirm Password"
+                />
+                <label htmlFor="photoUpload">Upload a profile picture:</label>
+                <input
+                    type="file"
+                    id="photoUpload"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                />
+                <input type="submit" value="Submit" />
+            </form>
+        </div>
     );
-}
+};
 
 export default SignUp;

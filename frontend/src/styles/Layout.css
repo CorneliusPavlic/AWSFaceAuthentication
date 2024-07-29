@@ -1,0 +1,104 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #121212;
+    color: #E0E0E0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  header {
+    background-color: #1E1E1E;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-sizing: border-box;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+  
+  .logo-image {
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .logo-text-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .logo-text {
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #BB86FC;
+  }
+  
+  .logo-subtext {
+    font-size: 0.875rem;
+    color: #E0E0E0;
+    margin-top: -5px;
+  }
+  
+  .menu-button {
+    color: #BB86FC;
+  }
+  
+  .menu-link {
+    color: #BB86FC;
+    text-decoration: none;
+    display: block;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .menu-link:hover {
+    background-color: #333;
+    color: #BB86FC;
+  }
+  
+  .MuiMenu-paper {
+    background-color: #1E1E1E;
+    color: #E0E0E0;
+  }
+  
+  .MuiMenuItem-root {
+    padding: 0;
+  }
+  
+  .menu-item {
+    width: 100%;
+    color: #E0E0E0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: left;
+  }
+  
+  .menu-item:hover {
+    background-color: #3700B3;
+    color: #121212;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 2rem;
+    background-color: #121212;
+    margin-top: 4rem; /* Adjust this to prevent overlap with the fixed header */
+  }
+  

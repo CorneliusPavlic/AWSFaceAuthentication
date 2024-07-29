@@ -21,7 +21,26 @@ db_password = os.getenv('DB_PASSWORD')
 
 s3_client = boto3.client('s3')
 rekognition_client = boto3.client('rekognition')
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table('StoredUsers')
 bucket_name = 'authphotobucket'
+
+def increment_route_call_count(route):
+    response = table.get_item(Key={'Route': route})
+    if 'Item' in response:
+        current_count = response['Item']['Count']
+        new_count = current_count + 1
+        table.update_item(
+            Key={'Route': route},
+            UpdateExpression='SET #count = :val',
+            ExpressionAttributeNames={'#count': 'Count'},
+            ExpressionAttributeValues={':val': new_count}
+        )
+        return new_count
+    else:
+        table.put_item(Item={'Route': route, 'Count': 1})
+        return 1
+
 
 def get_user_details(username):
     connection = None
@@ -47,6 +66,9 @@ def get_user_details(username):
             connection.close()
     return None
 
+@app.route('/api/visitors', methods=['GET'])
+def get_visitors():
+    return jsonify({'visitors': increment_route_call_count('/api/visitors')})
 
 @app.route('/api/register', methods=['POST'])
 def sign_up():

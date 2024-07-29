@@ -1,6 +1,6 @@
-
 import { useState, useRef, useCallback } from "react";
 import Webcam from "react-webcam";
+import "../styles/Camera.css";
 
 const videoConstraints = {
   width: 540,
@@ -8,13 +8,13 @@ const videoConstraints = {
 };
 
 const Camera = (props) => {
-    console.log(props)
   const [isVisible, setIsVisible] = useState(true);
   const webcamRef = useRef(null);
   const [url, setUrl] = useState(null);
-  const capturePhoto = useCallback(async () => {
+
+  const capturePhoto = useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
-    props.callback(imageSrc)
+    props.callback(imageSrc);
     setIsVisible(false);
     setUrl(imageSrc);
   }, [webcamRef, props]);
@@ -23,29 +23,36 @@ const Camera = (props) => {
     console.log(e);
   };
 
-
   return (
-    <>
-    <div>
-		{isVisible && <Webcam
-        ref={webcamRef}
-        audio={false}
-        screenshotFormat="image/jpeg"
-        videoConstraints={videoConstraints}
-        onUserMedia={onUserMedia}
-      />}
-      
-	</div>
-      <button onClick={capturePhoto}>Capture</button>
-      <button onClick={() => {
-        setIsVisible(true)
-        setUrl(null); }}>Refresh</button>
+    <div className="camera-container">
+      {isVisible && (
+        <Webcam
+          ref={webcamRef}
+          audio={false}
+          screenshotFormat="image/jpeg"
+          videoConstraints={videoConstraints}
+          onUserMedia={onUserMedia}
+          className="webcam"
+        />
+      )}
+      <div className="button-container">
+        <button onClick={capturePhoto} className="camera-button">Capture</button>
+        <button
+          onClick={() => {
+            setIsVisible(true);
+            setUrl(null);
+          }}
+          className="camera-button"
+        >
+          Refresh
+        </button>
+      </div>
       {url && (
         <div>
-          <img src={url} alt="Screenshot" />
+          <img src={url} alt="Screenshot" className="screenshot" />
         </div>
       )}
-    </>
+    </div>
   );
 };
 
