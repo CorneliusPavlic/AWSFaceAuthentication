@@ -23,7 +23,7 @@ const ProtectedRoute = ({ element: Component, ...rest }) => {
         return <div>Loading...</div>;
     }
 
-    return isAuthenticated ? Component : <Navigate to="/signup" />;
+    return isAuthenticated ? Component : <Navigate to="/" />;
 };
 
 async function verifyTokenWithServer(token) {

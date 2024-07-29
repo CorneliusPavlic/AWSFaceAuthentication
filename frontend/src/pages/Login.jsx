@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Camera from "../components/Camera";
 import "../w3.css"
+import "../styles/Login.css"
 const Login = () => {
     const [photo, setPhoto] = useState("");
     const [formData, setFormData] = useState({username: "", password: "", UserPhoto:""});
@@ -42,7 +43,9 @@ const Login = () => {
 
   return (
     <>
-    <Camera callback={handleCallback}/>
+    <div>
+    <Camera className="camera" callback={handleCallback}/>
+    </div>
     <label for="user">UserName:</label><br/>
     <input type="text" id="user" name="username" onChange={handleChange} value={formData.username} placeholder="Username"/><br/>
      <label for="pword">Password:</label><br/>
