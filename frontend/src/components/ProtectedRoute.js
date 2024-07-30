@@ -42,6 +42,7 @@ async function verifyTokenWithServer(token) {
         }
 
         const result = await response.json();
+        console.log(result);
         return result.valid; // Assume the server returns { valid: true } or { valid: false }
     } catch (error) {
         console.error('Error:', error);
