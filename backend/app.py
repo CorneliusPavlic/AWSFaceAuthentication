@@ -18,11 +18,17 @@ db_endpoint = 'corneliusauthappdb.czoke488w3yy.us-east-1.rds.amazonaws.com'
 db_name = 'corneliusauthappdb'
 db_user = 'admin'
 db_password = os.getenv('DB_PASSWORD')
+app.config['JWT_SECRET_KEY'] = SECRET_KEY
+
+# Initialize JWTManager
+jwt = JWTManager(app)
+
+
 
 s3_client = boto3.client('s3')
 rekognition_client = boto3.client('rekognition')
 dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table('StoredUsers')
+table = dynamodb.Table('APICallCount')
 bucket_name = 'authphotobucket'
 
 def increment_route_call_count(route):
@@ -40,6 +46,11 @@ def increment_route_call_count(route):
     else:
         table.put_item(Item={'Route': route, 'Count': 1})
         return 1
+
+
+@app.route('/api/test', methods=['GET'])
+def test():
+    return "Hello There"
 
 
 def get_user_details(username):
@@ -72,16 +83,17 @@ def get_visitors():
 
 @app.route('/api/register', methods=['POST'])
 def sign_up():
+    print("We made it into sign_up")
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
     user_photo_base64 = data.get('UserPhoto')
     if not username or not password or not user_photo_base64:
         return jsonify({'error': 'Missing required fields'}), 400
-    
+
     # Hash the password
     hashed_password = get_hashed_password(password)
-    
+
     if user_photo_base64.startswith('data:image/jpeg;base64,'):
         user_photo_base64 = user_photo_base64[len('data:image/jpeg;base64,'):]
 
@@ -90,8 +102,9 @@ def sign_up():
     # Save the image to S3
     image_key = f"{username}.jpg"
     s3_client.put_object(Bucket=bucket_name, Key=image_key, Body=image_data)
-    
+
     connection = None
+    print("made it to connection")
     try:
         connection = pymysql.connect(
             host=db_endpoint,
@@ -123,23 +136,23 @@ def handle_auth():
     user_details = get_user_details(username)
     if not user_details:
         return jsonify({'error': 'User not found'}), 404
-    
+
     stored_password = user_details['password']
     stored_user_image = user_details['userImage']
     # Compare the provided password with the stored password
     if verify_password(provided_password, stored_password) == False:
         return jsonify({'error': 'Invalid password'}), 401
-        
+
     if user_photo_base64.startswith('data:image/jpeg;base64,'):
         user_photo_base64 = user_photo_base64[len('data:image/jpeg;base64,'):]
 
     user_photo_data = base64.b64decode(user_photo_base64)
-    
+
 
     face_matches = compare_faces(stored_user_image, user_photo_data)
     if(face_matches == 1):
         access_token = create_access_token(identity=username)
-        return jsonify(access_token=access_token), 200
+        return jsonify(token=access_token), 200
     else:
         return jsonify({'error': 'Face not recognized'}), 401
 
@@ -148,10 +161,10 @@ def handle_auth():
 def verify_token():
     data = request.get_json()
     token = data.get('token')
-    
+
     if not token:
         return jsonify({'valid': False}), 400
-    
+
     try:
         # Decode and verify the JWT token
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
@@ -200,5 +213,5 @@ def verify_password(provided_password, stored_hashed_password):
     return bcrypt.checkpw(provided_password.encode('utf-8'), stored_hashed_password)
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run()
