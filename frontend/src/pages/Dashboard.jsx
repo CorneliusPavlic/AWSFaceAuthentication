@@ -5,7 +5,6 @@ const Dashboard = () => {
   const [visitors, setVisitors] = useState(0);
 
   useEffect(() => {
-    // Replace '/api/visitors' with the actual endpoint of your API
     const fetchVisitors = async () => {
       try {
         const response = await fetch('/api/visitors');
@@ -13,6 +12,7 @@ const Dashboard = () => {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
+        console.log(data);
         setVisitors(data.visitors);
       } catch (error) {
         console.error('Error fetching visitors:', error);
