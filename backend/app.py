@@ -7,7 +7,8 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 import pymysql
 import base64
 import boto3
-import jwt
+import jwt as jwtl
+from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
 
 
 load_dotenv()
@@ -167,12 +168,12 @@ def verify_token():
 
     try:
         # Decode and verify the JWT token
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwtl.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         # Optionally, you can also validate the expiration date here
         return jsonify({'valid': True})
-    except jwt.ExpiredSignatureError:
+    except ExpiredSignatureError:
         return jsonify({'valid': False, 'error': 'Token has expired'}), 401
-    except jwt.InvalidTokenError:
+    except InvalidTokenError:
         return jsonify({'valid': False, 'error': 'Invalid token'}), 401
 
 
