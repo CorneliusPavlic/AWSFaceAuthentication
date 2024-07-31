@@ -23,6 +23,10 @@ body {
     z-index: 1000;
     box-sizing: border-box;
   }
+
+  h4 {
+    color: #BB86FC
+  }
   
   .logo {
     display: flex;
@@ -98,7 +102,10 @@ body {
   .main-content {
     flex: 1;
     padding: 2rem;
+    height: 40rem;
     background-color: #121212;
-    margin-top: 4rem; /* Adjust this to prevent overlap with the fixed header */
+    margin-top: 10rem; /* Adjust this to prevent overlap with the fixed header */
+    box-sizing: border-box;
+    overflow: scroll; /* Allows scrolling if content overflows */
   }
   

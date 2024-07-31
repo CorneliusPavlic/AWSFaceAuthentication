@@ -58,6 +58,9 @@ const Layout = () => {
           <MenuItem onClick={handleClose}>
             <Link to="/dashboard" className="menu-link">Dashboard</Link>
           </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <Link to="/projects" className="menu-link">Projects</Link>
+          </MenuItem>
         </Menu>
       </header>
       <main className="main-content">

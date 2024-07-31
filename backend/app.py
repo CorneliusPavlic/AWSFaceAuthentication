@@ -115,6 +115,11 @@ def sign_up():
             connect_timeout=10
         )
         cursor = connection.cursor()
+        cursor.execute("SELECT COUNT(*) FROM User WHERE Username = %s", (username,))
+        
+        if cursor.fetchone()[0] > 0:
+            return jsonify({'error': 'Username already exists'}), 409
+        
         cursor.execute("INSERT INTO User (Username, Password, userImage) VALUES (%s, %s, %s)", (username, hashed_password, image_key))
         connection.commit()
         return jsonify({'message': 'User created successfully'}), 201

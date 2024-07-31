@@ -7,6 +7,7 @@ const SignUp = () => {
     const [formData, setFormData] = useState({ username: "", password: "", UserPhoto: "" });
     const [confirmPassword, setConfirmPassword] = useState("");
     const [file, setFile] = useState(null);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleChange = (event) => {
         setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -32,10 +33,10 @@ const SignUp = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (formData.password !== confirmPassword) {
-            alert("Passwords do not match");
+            setErrorMessage("Passwords do not match");
             return;
         }
-        
+
         const updatedFormData = { ...formData, UserPhoto: photo };
 
         try {
@@ -48,19 +49,42 @@ const SignUp = () => {
             });
 
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                let errorMessage;
+                switch (response.status) {
+                    case 400:
+                        errorMessage = 'Bad Request. Please check the input data.';
+                        break;
+                    case 401:
+                        errorMessage = 'Unauthorized. Please check your credentials.';
+                        break;
+                    case 403:
+                        errorMessage = 'Forbidden. You do not have permission to perform this action.';
+                        break;
+                    case 404:
+                        errorMessage = 'Not Found. The requested resource could not be found.';
+                        break;
+                    case 409:
+                        errorMessage = "This username is already taken. Please choose another one.";
+                        break;
+                    case 500:
+                        errorMessage = 'Internal Server Error. Please try again later.';
+                        break;
+                    default:
+                        errorMessage = 'An error occurred. Please try again.';
+                }
+                setErrorMessage(errorMessage);
             }
             const result = await response.json();
             if (result.token) {
                 // Store the token in localStorage or sessionStorage
                 localStorage.setItem('authToken', result.token);
-                window.location.href = '/dashboard';
+                window.location.href = '/login';
             } else {
-                console.error('No token received');
+                setErrorMessage('No token received');
             }
         } catch (error) {
             console.error('Error:', error);
-            // Handle error (e.g., show a message to the user)
+            setErrorMessage('Failed to sign up. Please try again.');
         }
     };
 
@@ -95,7 +119,7 @@ const SignUp = () => {
                     value={confirmPassword}
                     placeholder="Confirm Password"
                 />
-                <label htmlFor="photoUpload">Upload a profile picture:</label>
+                <label htmlFor="photoUpload">Upload a picture to identify you with or take a picture with the webcam:</label>
                 <input
                     type="file"
                     id="photoUpload"
@@ -103,6 +127,7 @@ const SignUp = () => {
                     onChange={handleFileChange}
                 />
                 <input type="submit" value="Submit" />
+                {errorMessage && <p className="error">{errorMessage}</p>}
             </form>
         </div>
     );

@@ -71,3 +71,7 @@ body {
     background-color: #3700B3;
   }
   
+  .error {
+    color: red;
+    margin-top: 10px;
+}
