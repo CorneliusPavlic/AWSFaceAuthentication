@@ -1,5 +1,5 @@
 import { Outlet, Link } from "react-router-dom";
-import '../styles/Layout.css';  // Make sure to import the CSS file
+import '../styles/Layout.css';  
 import { useState } from 'react';
 import { Button, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
