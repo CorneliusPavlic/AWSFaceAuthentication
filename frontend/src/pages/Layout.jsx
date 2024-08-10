@@ -7,13 +7,18 @@ import MenuIcon from '@mui/icons-material/Menu';
 const Layout = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const token = localStorage.getItem('authToken');
+  let token = localStorage.getItem('authToken');
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const removeToken = () => {
+    localStorage.removeItem('authToken');
+    window.location.reload();
+  }
 
   return (
     <>
@@ -50,6 +55,13 @@ const Layout = () => {
           {!token && (
             <MenuItem onClick={handleClose}>
               <Link to="/signup" className="menu-link">Sign Up</Link>
+            </MenuItem>
+          )}
+           {token && (
+            <MenuItem onClick={() => {
+              handleClose();
+              removeToken(); }}>
+              Sign Out
             </MenuItem>
           )}
           <MenuItem onClick={handleClose}>
