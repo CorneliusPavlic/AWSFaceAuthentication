@@ -53,6 +53,13 @@ const projects = [
         description: "This is my current project. I'm working again as a Research Assistant for Kent State. The goal is to identify and track students in a classroom so that gaze data can be collected from both experienced teachers and student teachers and compared to improve the student teacher's teaching ability. It's using Yolov9 and ReID  for the tracking and identification. My goals are to improve the ReID and add more user friendly options for user to interact with the data.",
         image: "/xri.png",
         tags:["Python", "AI", "ML", "Research", "Yolov9", "ReID", "Tracking", "Identification"]
+    },
+    {
+        title:"GPT generator",
+        description:"I handbuilt a Transformer model using Pytorch and trained it on a dataset of words using the principals of Generative Transformers to create a model that would auto generate text similar to the input given it. This project was a foundational project to understand the underworkings of the transformer models and how to train it.",
+        githubLink:"https://github.com/CorneliusPavlic/GPT-Arcitecture",
+        tags:["Python", "AI", "ML", "Transformer", "GPT", "Pytorch"]
+
     }
 ];
 
@@ -89,7 +96,7 @@ const Projects = () => {
                         onClick={() => handleExpand(index)}
                     >
                         <h3>{project.title}</h3>
-                        <img src={project.image} alt={project.title} className="project-image"/>
+                        {project.image && (<img src={project.image} alt={project.title} className="project-image"/>)}
                         {expandedProject === index && (
                             <div className="project-details">
                                 <p>{project.description}</p>

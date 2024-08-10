@@ -4,38 +4,38 @@ const Home = () => {
   return (
     <div className="resume-container">
       <div className="profile-section">
-        <h1>John Doe</h1>
-        <p>Web Developer</p>
+        <h1>Cornelius Pavlic</h1>
+        <p>Software Engineer</p>
       </div>
 
       <div className="contact-section">
         <h2>Contact Information</h2>
-        <p>Email: johndoe@example.com</p>
-        <p>Phone: (123) 456-7890</p>
-        <p>LinkedIn: linkedin.com/in/johndoe</p>
-        <p>GitHub: github.com/johndoe</p>
+        <p>Email: cornelius.pavlic@gmail.com</p>
+        <p>Phone: (440) 635-7702</p>
+        <p>LinkedIn: <a href="www.linkedin.com/in/cornelius-pavlic-010956224">www.linkedin.com/in/cornelius-pavlic-010956224</a></p>
+        <p>GitHub: <a href="https://github.com/CorneliusPavlic">https://github.com/CorneliusPavlic</a></p>
       </div>
 
       <div className="experience-section">
         <h2>Experience</h2>
         <div className="experience-item">
-          <h3>Senior Web Developer</h3>
-          <p>Company ABC</p>
-          <p>Jan 2020 - Present</p>
+          <h3>Research Assistant</h3>
+          <p>Kent State University</p>
+          <p>May 2024 - Present</p>
           <ul>
-            <li>Developed and maintained web applications using React and Node.js</li>
-            <li>Led a team of 5 developers to deliver projects on time</li>
-            <li>Implemented responsive design to improve user experience</li>
+            <li>Developed a web application interface with frontend and backend</li>
+            <li>Developed a full program to segment and detect math equations including fractions.</li>
+            <li>Trained a pre-existing model on a dataset in order to acheive higher accuracy</li>
+            <li>Worked with a team to produce the product and fine-tune to the required specifications</li>
           </ul>
         </div>
         <div className="experience-item">
-          <h3>Web Developer</h3>
-          <p>Company XYZ</p>
-          <p>Jun 2017 - Dec 2019</p>
+          <h3>Program Leader</h3>
+          <p>Emeth Gymnastics</p>
+          <p>December 2018 - Present</p>
           <ul>
-            <li>Created and optimized websites using HTML, CSS, and JavaScript</li>
-            <li>Collaborated with designers to create user-friendly interfaces</li>
-            <li>Performed code reviews and mentored junior developers</li>
+            <li>Lead a team of coaches, including training and planning.</li>
+            <li>Communicated with team members to develop useful lesson plans</li>
           </ul>
         </div>
       </div>
@@ -44,8 +44,8 @@ const Home = () => {
         <h2>Education</h2>
         <div className="education-item">
           <h3>Bachelor of Science in Computer Science</h3>
-          <p>University of Somewhere</p>
-          <p>2013 - 2017</p>
+          <p>Kent State University</p>
+          <p>2021-2025</p>
         </div>
       </div>
 
@@ -54,14 +54,18 @@ const Home = () => {
         <ul className="skills-list">
           <li>JavaScript</li>
           <li>React</li>
-          <li>Node.js</li>
-          <li>HTML & CSS</li>
+          <li>Python</li>
           <li>Git</li>
-          <li>REST APIs</li>
+          <li>Communication</li>
+          <li>Teamwork</li>
+          <li>Pytorch</li>
+          <li>OpenCV</li>
+          <li>Problem Solving</li>
+          <li>Artifical Intelligence</li>
         </ul>
       </div>
     </div>
-  );
+      );
 };
 
 export default Home;

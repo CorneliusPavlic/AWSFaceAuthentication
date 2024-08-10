@@ -50,7 +50,7 @@ const Layout = () => {
           }}
         >
           <MenuItem onClick={handleClose}>
-            <Link to="/" className="menu-link">Login</Link>
+            <Link to="/login" className="menu-link">Login</Link>
           </MenuItem>
           {!token && (
             <MenuItem onClick={handleClose}>
@@ -65,7 +65,7 @@ const Layout = () => {
             </MenuItem>
           )}
           <MenuItem onClick={handleClose}>
-            <Link to="/home" className="menu-link">Home</Link>
+            <Link to="/resume" className="menu-link">Resume</Link>
           </MenuItem>
           <MenuItem onClick={handleClose}>
             <Link to="/dashboard" className="menu-link">Dashboard</Link>
