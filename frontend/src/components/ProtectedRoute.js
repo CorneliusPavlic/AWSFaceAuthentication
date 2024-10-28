@@ -5,15 +5,17 @@ const ProtectedRoute = ({ element: Component, ...rest }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(null);
 
     useEffect(() => {
-        setIsAuthenticated("valid");
-        // const checkToken = async () => {
-        //     const token = localStorage.getItem('authToken');
-        //     if (token) {
-        //         const valid = await verifyTokenWithServer(token);
-        //         setIsAuthenticated(valid);
-        //     } else {
-        //         setIsAuthenticated(false);
-        //     }
+        const checkToken = async () => {
+            const token = localStorage.getItem('authToken');
+            if (token) {
+                const valid = await verifyTokenWithServer(token);
+                setIsAuthenticated(valid);
+            } else {
+                setIsAuthenticated(false);
+            }
+        };
+
+        checkToken();
     }, []);
 
     // Render a loading state while checking authentication
@@ -21,7 +23,7 @@ const ProtectedRoute = ({ element: Component, ...rest }) => {
         return <div>Loading...</div>;
     }
 
-    return isAuthenticated ? Component : <Navigate to="/" />;
+    return isAuthenticated ? <Component {...rest} /> : <Navigate to="/" />;
 };
 
 async function verifyTokenWithServer(token) {
